@@ -345,7 +345,7 @@
             [NSThread sleepForTimeInterval:0.2];
         } else {
             NSLog(@"票数售完");
-//            dispatch_semaphore_signal(_semaphoreLock);
+            dispatch_semaphore_signal(_semaphoreLock);
             break;
         }
         dispatch_semaphore_signal(_semaphoreLock);
