@@ -22,13 +22,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-//    [self syncConCurrent];
+    [self syncConCurrent];
 //    [self asyncConCurrent];
     
 //    [self syncSerial];
 //    [self asyncSerial];
     
-    [self barrier];
+//    [self barrier];
     
 //    [self after];
     
@@ -51,7 +51,13 @@
 //1.1 同步执行 + 并发队列
 //在当前线程中执行任务，不会开启新线程，执行完一个任务，再执行下一个任务。
 - (void)syncConCurrent {
-    
+//    2018-07-24 14:42:15.203613+0800 MultiThreading[93742:13873487] <NSThread: 0x604000069980>{number = 1, name = main}
+//    2018-07-24 14:42:15.203798+0800 MultiThreading[93742:13873487] syncConCurrent -- begin
+//    2018-07-24 14:42:17.204990+0800 MultiThreading[93742:13873487] 1-----<NSThread: 0x604000069980>{number = 1, name = main}
+//    2018-07-24 14:42:19.206588+0800 MultiThreading[93742:13873487] 2-----<NSThread: 0x604000069980>{number = 1, name = main}
+//    2018-07-24 14:42:21.207498+0800 MultiThreading[93742:13873487] 3-----<NSThread: 0x604000069980>{number = 1, name = main}
+//    2018-07-24 14:42:21.207761+0800 MultiThreading[93742:13873487] syncConCurrent -- end
+
 //    所有任务都是在当前线程（主线程）中执行的，没有开启新的线程（同步执行不具备开启新线程的能力）。
 //    所有任务都在打印的syncConcurrent---begin和syncConcurrent---end之间执行的（同步任务需要等待队列的任务执行结束）。
 //    任务按顺序执行的。按顺序执行的原因：虽然并发队列可以开启多个线程，并且同时执行多个任务。但是因为本身不能创建新线程，只有当前线程这一个线程（同步任务不具备开启新线程的能力），所以也就不存在并发。
@@ -82,6 +88,13 @@
 }
 
 //1.2 异步执行 + 并发队列
+//2018-07-24 14:41:33.562718+0800 MultiThreading[93633:13871947] <NSThread: 0x604000073a80>{number = 1, name = main}
+//2018-07-24 14:41:33.562981+0800 MultiThreading[93633:13871947] asyncConCurrent -- begin
+//2018-07-24 14:41:33.563145+0800 MultiThreading[93633:13871947] asyncConCurrent -- end
+//2018-07-24 14:41:35.566343+0800 MultiThreading[93633:13872159] 1-----<NSThread: 0x604000269740>{number = 3, name = (null)}
+//2018-07-24 14:41:35.566408+0800 MultiThreading[93633:13872378] 3-----<NSThread: 0x600000662d00>{number = 4, name = (null)}
+//2018-07-24 14:41:35.566444+0800 MultiThreading[93633:13872370] 2-----<NSThread: 0x600000662c80>{number = 5, name = (null)}
+
 - (void)asyncConCurrent {
     
 //    除了当前线程（主线程），系统又开启了3个线程，并且任务是交替/同时执行的。（异步执行具备开启新线程的能力。且并发队列可开启多个线程，同时执行多个任务）。
