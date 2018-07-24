@@ -28,7 +28,7 @@
 //    [self syncSerial];
 //    [self asyncSerial];
     
-//    [self barrier];
+    [self barrier];
     
 //    [self after];
     
@@ -37,7 +37,7 @@
     
 //    [self semaphoreSync];
     
-    [self initTicketStatusSave];
+//    [self initTicketStatusSave];
 }
 
 #pragma mark -- GCD
@@ -182,6 +182,14 @@
 }
 
 //2. GCD 栅栏方法：dispatch_barrier_async
+//2018-07-24 10:15:11.110202+0800 MultiThreading[65968:13591915] barrier -- begin
+//2018-07-24 10:15:11.113672+0800 MultiThreading[65968:13591915] barrier -- end
+//2018-07-24 10:15:13.116170+0800 MultiThreading[65968:13592295] 1-----<NSThread: 0x6000004733c0>{number = 3, name = (null)}
+//2018-07-24 10:15:16.116118+0800 MultiThreading[65968:13592292] 2-----<NSThread: 0x60400046a640>{number = 4, name = (null)}
+//2018-07-24 10:15:18.117594+0800 MultiThreading[65968:13592292] 3-----<NSThread: 0x60400046a640>{number = 4, name = (null)}
+//2018-07-24 10:15:20.121517+0800 MultiThreading[65968:13592295] 5-----<NSThread: 0x6000004733c0>{number = 3, name = (null)}
+//2018-07-24 10:15:20.121517+0800 MultiThreading[65968:13592292] 4-----<NSThread: 0x60400046a640>{number = 4, name = (null)}
+
 - (void)barrier {
 //    在执行完栅栏前面的操作之后，才执行栅栏操作，最后再执行栅栏后边的操作。
     dispatch_queue_t queue = dispatch_queue_create("barrier", DISPATCH_QUEUE_CONCURRENT);
